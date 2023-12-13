@@ -1,0 +1,133 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: voting-app-deployment
+spec:
+
+  # ReplicaSet
+  replicas: 2
+  selector:
+    matchLabels:
+      replicated: ok
+
+  # VotingApp-Pod
+  teplate:
+    metadata:
+      name: voting-app-pod
+      labels:
+        replicated: ok
+        service: voting
+    spec:
+      containers:
+      - name: voting-app-container
+        image: dockersamples/examplevotingapp_vote
+
+  # Redis Pod
+  teplate:
+    metadata:
+      name: redis-pod
+      labels:
+        replicated: ok
+        service: redis
+    spec:
+      containers:
+      - name: redis-container
+        image: redis:latest
+
+  # Worker Pod
+  teplate:
+    metadata:
+      name: worker-pod
+      labels:
+        replicated: ok
+        # service: worker
+    spec:
+      containers:
+      - name: worker-container
+        image: dockersamples/examplevotingapp_worker
+
+  # Result App Pod
+  teplate:
+    metadata:
+      name: result-app-pod
+      labels:
+        replicated: ok
+        service: result
+    spec:
+      containers:
+      - name: result-app-container
+        image: dockersamples/examplevotingapp_result
+
+  # Postgres Pod
+  teplate:
+    metadata:
+      name: postgres-pod
+      labels:
+        replicated: ok
+        service: postgres
+    spec:
+      containers:
+      - name: postgres-container
+        image: postgres
+
+---
+
+# Redis Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+spec:
+  type: ClusterIP
+  ports:
+  - targetPort: 6379
+    port: 6379
+  selector:
+    service: redis
+
+---
+
+# Postgres service
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+spec:
+  type: ClusterIP
+  ports:
+  - targetPort: 5432
+    port: 5432
+  selector:
+    service: postgres
+
+---
+
+# Voting App
+apiVersion: v1
+kind: Service
+metadata:
+  name: voting
+spec:
+  type: NodePort
+  ports:
+  - targetPort: 80
+    port: 80
+    nodePort: 31200
+  selector:
+    service: voting
+
+---
+
+# Result App
+apiVersion: v1
+kind: Service
+metadata:
+  name: result
+spec:
+  type: NodePort
+  ports:
+  - targetPort: 80
+    port: 80
+    nodePort: 31100
+  selector:
+    service: result
