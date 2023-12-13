@@ -11,7 +11,7 @@ spec:
       replicated: ok
 
   # VotingApp-Pod
-  teplate:
+  template:
     metadata:
       name: voting-app-pod
       labels:
@@ -23,7 +23,7 @@ spec:
         image: dockersamples/examplevotingapp_vote
 
   # Redis Pod
-  teplate:
+  template:
     metadata:
       name: redis-pod
       labels:
@@ -35,7 +35,7 @@ spec:
         image: redis:latest
 
   # Worker Pod
-  teplate:
+  template:
     metadata:
       name: worker-pod
       labels:
@@ -47,7 +47,7 @@ spec:
         image: dockersamples/examplevotingapp_worker
 
   # Result App Pod
-  teplate:
+  template:
     metadata:
       name: result-app-pod
       labels:
@@ -59,7 +59,7 @@ spec:
         image: dockersamples/examplevotingapp_result
 
   # Postgres Pod
-  teplate:
+  template:
     metadata:
       name: postgres-pod
       labels:
