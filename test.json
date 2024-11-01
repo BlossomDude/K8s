@@ -1,0 +1,40 @@
+{
+    "application": {
+      "name": "oba"
+    },
+    "deploy": [
+      {
+        "polygon": "prom",
+        "openShift": [
+          {
+            "namespace": "blue",
+            "clusterName": "closter-t01"
+          }
+        ]
+      },
+      {
+        "polygon": "poly1",
+        "openShift": [
+          {
+            "namespace": "poly1space",
+            "clusterName": "closter-t02"
+          }
+        ]
+      },
+      {
+        "polygon": "poly2",
+        "openShift": [
+          {
+            "namespace": "poly2space",
+            "clusterName": "closter-t03",
+            "release": [
+              {
+                "postfix": "",
+                "templateVersion": "1.37.0"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
